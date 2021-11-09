@@ -18,10 +18,8 @@
   <body>
     <section>
       <div class="container">
-        <h1 class="display-1">TODO LIST</h1>
-
         <!-- form create new todo -->
-        <form class="mb-3" id="todoFormId">
+        <form class="mb-3 display-2" id="todoFormId">
           <div class="mb-3">
             <label for="todoItem" id="id-label" class="form-label"
               >Create new todo</label
@@ -38,6 +36,17 @@
 
           <button type="submit" class="btn btn-warning">Submit</button>
         </form>
+        <h1 class="display-5">TODO LIST</h1>
+        <div class="input-group my-3">
+          <span class="input-group-text" id="searchTermSpan">Search</span>
+          <input
+            id="searchTerm"
+            type="text"
+            class="form-control"
+            aria-label="Username"
+            aria-describedby="searchTermSpan"
+          />
+        </div>
 
         <ul id="todo__list"></ul>
       </div>
@@ -70,5 +79,6 @@
     ></script>
 
     <script src="./src/main.js"></script>
+    <script src="./src/search_main.js"></script>
   </body>
 </html>
