@@ -2,7 +2,7 @@
  * get value search input
  * get all elements in ul
  * check textContent title equal value search input
- * if not includes in search input hidden liElement
+ * if includes in search input,  hidden rest liElement
  * if search value === "" return all liElement
  */
 
@@ -18,6 +18,13 @@ function isMatch(liElement, searchTerm) {
   return headingTodo.textContent
     .toLowerCase()
     .includes(searchTerm.toLowerCase());
+}
+
+function handleSearchChange(filterName, filterValue) {
+  const url = new URL(window.location);
+  url.searchParams.set(filterName, filterValue);
+
+  history.pushState({}, "", url);
 }
 
 function searchTodoElement(searchTerm) {
@@ -40,7 +47,8 @@ function initSearchInput() {
   if (!searchInput) return;
 
   searchInput.addEventListener("keyup", () => {
-    searchTodoElement(searchInput.value);
+    // searchTodoElement(searchInput.value);
+    handleSearchChange("searchTerm", searchInput.value);
   });
 }
 

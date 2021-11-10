@@ -48,6 +48,16 @@
           />
         </div>
 
+        <select
+          id="filterStatus"
+          class="form-select mb-3"
+          aria-label="Default select example"
+        >
+          <option selected value="all">All</option>
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+        </select>
+
         <ul id="todo__list"></ul>
       </div>
     </section>
@@ -79,6 +89,6 @@
     ></script>
 
     <script src="./src/main.js"></script>
-    <script src="./src/search_main.js"></script>
+    <script src="./src/persist_filter.js"></script>
   </body>
 </html>
