@@ -1,7 +1,33 @@
-// create li element
-function createLiElement(todoItem) {
-  if (!todoItem) return null;
+// utils.js
+function getAllLiElements() {
+  return document.querySelectorAll("ul#todo__list > li");
+}
 
+function isMatchStatus(liElement, filterStatus) {
+  return filterStatus === "all" || liElement.dataset.status === filterStatus;
+}
+
+function isMatchSearch(liElement, searchTerm) {
+  if (searchTerm === "") return true;
+
+  const titleElement = liElement.querySelector("p.todo__heading");
+
+  return titleElement.textContent
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase());
+}
+
+function isMatch(liElement, params) {
+  return (
+    isMatchSearch(liElement, params.get("searchTerm")) &&
+    isMatchStatus(liElement, params.get("status"))
+  );
+}
+
+// create li element
+function createLiElement(todoItem, params) {
+  if (!todoItem) return null;
+  if (!params) return;
   /**
    * ! get template li
    * clone node li
@@ -19,6 +45,8 @@ function createLiElement(todoItem) {
   const titleElement = liElement.querySelector("p.todo__heading");
   titleElement.textContent = todoItem.title;
 
+  // ! => IMPORTANCE title render then LiElement has attr hidden
+  liElement.hidden = !isMatch(liElement, params);
   //! update class alert based on status
   //render todo status
 
@@ -136,14 +164,14 @@ function populateTodoForm(todo) {
 }
 
 //render ul element
-function renderUlElement(todoList, ulElementId) {
+function renderUlElement(todoList, ulElementId, params) {
   if (!Array.isArray(todoList) || todoList.length === 0) return;
 
   const ulElement = document.getElementById(ulElementId);
   if (!ulElement) return;
 
   for (let todo of todoList) {
-    const liElement = createLiElement(todo);
+    const liElement = createLiElement(todo, params);
 
     ulElement.appendChild(liElement);
   }
@@ -257,9 +285,12 @@ function handleSubmit(e) {
 
 // main
 (() => {
+  //get query params render
+  const params = new URLSearchParams(window.location.search);
+
   const todoList = getTodoItemLocalStorage();
 
-  renderUlElement(todoList, "todo__list");
+  renderUlElement(todoList, "todo__list", params);
 
   const formSubmit = document.getElementById("todoFormId");
   formSubmit.addEventListener("submit", handleSubmit);
@@ -267,4 +298,5 @@ function handleSubmit(e) {
 
 /**
  * ! ~ rework edit mode
+ * ! ~ 12/11 rework local history get query params
  */
