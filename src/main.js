@@ -1,8 +1,4 @@
 // utils.js
-function getAllLiElements() {
-  return document.querySelectorAll("ul#todo__list > li");
-}
-
 function isMatchStatus(liElement, filterStatus) {
   return filterStatus === "all" || liElement.dataset.status === filterStatus;
 }
@@ -43,6 +39,7 @@ function createLiElement(todoItem, params) {
 
   //? update title li element
   const titleElement = liElement.querySelector("p.todo__heading");
+  if (!titleElement) return;
   titleElement.textContent = todoItem.title;
 
   // ! => IMPORTANCE title render then LiElement has attr hidden
